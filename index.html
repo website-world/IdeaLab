@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>IdeaLab — Wujudkan Aplikasi Impianmu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --surface-2: #1a1a26;
+            --surface-3: #222233;
+            --gold: #d4a745;
+            --gold-light: #e8c96a;
+            --gold-dark: #b8912e;
+            --text: #e8e8f0;
+            --text-secondary: #a0a0b8;
+            --text-muted: #6a6a80;
+            --accent: #7c5ce7;
+            --accent-light: #9b7ef0;
+            --border: rgba(255, 255, 255, 0.06);
+            --border-gold: rgba(212, 167, 69, 0.25);
+            --gradient-1: linear-gradient(135deg, #d4a745 0%, #e8c96a 40%, #c9983a 100%);
+            --gradient-2: linear-gradient(135deg, #7c5ce7 0%, #5b3dc7 100%);
+            --gradient-3: linear-gradient(160deg, #0a0a0f 0%, #12121a 50%, #1a1530 100%);
+            --shadow-gold: 0 0 60px rgba(212, 167, 69, 0.15);
+            --shadow-accent: 0 0 40px rgba(124, 92, 231, 0.2);
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --transition: 0.35s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none !important;
+            user-select: none;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            /* Prevent pinch-to-zoom while keeping scroll */
+            touch-action: pan-x pan-y;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* === CANVAS PARTICLES === */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.55;
+        }
+
+        /* === MAIN WRAPPER === */
+        .main-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* === NAVIGATION === */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 40px;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 80px);
+            max-width: 1300px;
+            z-index: 100;
+            background: rgba(18, 18, 26, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--border);
+            border-radius: 60px;
+            transition: var(--transition);
+        }
+        .navbar.scrolled {
+            background: rgba(18, 18, 26, 0.9);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.4rem;
+            letter-spacing: -0.5px;
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Playfair Display', serif;
+        }
+        .nav-logo .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #0a0a0f;
+            font-weight: 900;
+            box-shadow: var(--shadow-gold);
+        }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav-links a:hover {
+            color: #fff;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-cta {
+            background: var(--gradient-1);
+            color: #0a0a0f !important;
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-weight: 700 !important;
+            font-size: 0.9rem !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 4px 20px rgba(212, 167, 69, 0.3);
+            letter-spacing: 0.3px;
+        }
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212, 167, 69, 0.45) !important;
+            color: #0a0a0f !important;
+        }
+        .nav-cta::after {
+            display: none !important;
+        }
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: none;
+            background: none;
+            border: none;
+            padding: 6px;
+            z-index: 101;
+        }
+        .nav-toggle span {
+            width: 26px;
+            height: 2.5px;
+            background: #fff;
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        /* === HERO === */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 140px 40px 80px;
+            position: relative;
+        }
+        .hero-inner {
+            text-align: center;
+            max-width: 800px;
+            z-index: 2;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(124, 92, 231, 0.12);
+            border: 1px solid rgba(124, 92, 231, 0.3);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-light);
+            margin-bottom: 28px;
+            letter-spacing: 0.5px;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-light);
+            border-radius: 50%;
+            animation: pulse-dot 1.8s infinite;
+        }
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(124, 92, 231, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 14px rgba(124, 92, 231, 0);
+            }
+        }
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s 0.15s ease forwards;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+        .hero-title .gold {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            font-weight: 400;
+            line-height: 1.7;
+            animation: fadeInUp 0.8s 0.3s ease forwards;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 0.8s 0.45s ease forwards;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            cursor: none;
+            border: none;
+            transition: all 0.35s ease;
+            letter-spacing: 0.3px;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-primary {
+            background: var(--gradient-1);
+            color: #0a0a0f;
+            box-shadow: 0 6px 30px rgba(212, 167, 69, 0.35);
+            font-weight: 700;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(212, 167, 69, 0.5);
+        }
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn-outline:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-3px);
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* === STATS ROW (NOW HIDDEN) === */
+        .stats-row {
+            display: none;
+        }
+
+        /* === SECTION GENERAL === */
+        .section {
+            padding: 100px 40px;
+            position: relative;
+            z-index: 2;
+        }
+        .section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+        .section-desc {
+            color: var(--text-secondary);
+            max-width: 550px;
+            margin: 12px auto 0;
+            font-size: 1rem;
+        }
+
+        /* === FEATURES === */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(212, 167, 69, 0.04) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        .feature-card:hover {
+            border-color: var(--border-gold);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), var(--shadow-gold);
+        }
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 18px;
+            font-weight: 700;
+        }
+        .feature-icon.gold {
+            background: rgba(212, 167, 69, 0.12);
+            color: var(--gold-light);
+        }
+        .feature-icon.purple {
+            background: rgba(124, 92, 231, 0.12);
+            color: var(--accent-light);
+        }
+        .feature-icon.teal {
+            background: rgba(45, 212, 191, 0.12);
+            color: #2dd4bf;
+        }
+        .feature-card h3 {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+        }
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* === FORM SECTION === */
+        #form-section {
+            scroll-margin-top: 100px;
+        }
+        .form-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 48px 40px;
+            max-width: 750px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        .form-card::after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 20%;
+            right: 20%;
+            height: 1px;
+            background: var(--gradient-1);
+            opacity: 0.5;
+            border-radius: 0 0 50% 50%;
+        }
+        .form-card .glow-orb {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.06;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .form-card .glow-orb.top-right {
+            top: -100px;
+            right: -100px;
+            background: var(--gold);
+        }
+        .form-card .glow-orb.bottom-left {
+            bottom: -100px;
+            left: -100px;
+            background: var(--accent);
+        }
+        .form-content {
+            position: relative;
+            z-index: 1;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            margin-bottom: 20px;
+        }
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+        .form-group label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+            color: var(--text);
+        }
+        .form-group label .required {
+            color: var(--gold);
+            margin-left: 2px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: var(--surface-2);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 13px 16px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            outline: none;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(212, 167, 69, 0.08);
+            background: var(--surface-3);
+        }
+        .form-group textarea {
+            min-height: 220px;
+            resize: none;
+        }
+        .form-group select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a0a0b8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+            cursor: none;
+        }
+        .form-group select option {
+            background: var(--surface-2);
+            color: #fff;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            color: #0a0a0f;
+            border: none;
+            border-radius: 50px;
+            cursor: none;
+            transition: all 0.35s ease;
+            letter-spacing: 0.5px;
+            box-shadow: 0 6px 30px rgba(212, 167, 69, 0.3);
+            font-family: 'Inter', sans-serif;
+            margin-top: 10px;
+        }
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 44px rgba(212, 167, 69, 0.5);
+        }
+        .btn-submit:active {
+            transform: scale(0.97);
+        }
+
+        /* === SUCCESS OVERLAY === */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .success-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .success-modal {
+            background: var(--surface);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-xl);
+            padding: 50px 36px;
+            text-align: center;
+            max-width: 480px;
+            width: 90%;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), var(--shadow-gold);
+            animation: modalPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes modalPop {
+            from {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .success-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #0a0a0f;
+            font-weight: 900;
+            box-shadow: 0 0 40px rgba(212, 167, 69, 0.4);
+        }
+        .success-modal h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+        .success-modal p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        .btn-close-modal {
+            background: var(--surface-3);
+            color: #fff;
+            border: 1px solid var(--border);
+            padding: 12px 28px;
+            border-radius: 50px;
+            cursor: none;
+            font-weight: 600;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-close-modal:hover {
+            background: var(--surface-3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* === FOOTER === */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            position: relative;
+            z-index: 2;
+        }
+        .footer .gold {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 14px 20px;
+                width: calc(100% - 30px);
+                top: 10px;
+                border-radius: 40px;
+            }
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(10, 10, 15, 0.97);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 28px;
+                z-index: 100;
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-links a {
+                font-size: 1.2rem;
+            }
+            .nav-toggle {
+                display: flex;
+            }
+            .hero {
+                padding: 120px 20px 60px;
+            }
+            .section {
+                padding: 60px 20px;
+            }
+            .form-card {
+                padding: 30px 20px;
+                border-radius: var(--radius-lg);
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Particle Canvas -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar" id="navbar">
+            <a href="#" class="nav-logo">
+                <span class="logo-icon"><i class="fa-regular fa-gem"></i></span> IdeaLab
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#features">Mengapa</a></li>
+                <li><a href="#form-section">Kirim Ide</a></li>
+                <li><a href="#form-section" class="nav-cta">Mulai Sekarang</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-inner">
+                <h1 class="hero-title">
+                    Aplikasi Impianmu,<br><span class="gold">Kami Wujudkan.</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Punya ide brilian untuk sebuah aplikasi? Sampaikan aspirasimu di sini.
+                    Tim developer kami siap mendengarkan dan mewujudkannya
+                    menjadi produk nyata yang siap digunakan.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#form-section" class="btn btn-primary">
+                        <i class="fa-solid fa-paper-plane"></i> Kirim Ide Sekarang
+                    </a>
+                    <a href="#features" class="btn btn-outline">
+                        Pelajari Lebih Lanjut <i class="fa-solid fa-arrow-down"></i>
+                    </a>
+                </div>
+                <!-- Stats row hidden via CSS -->
+                <div class="stats-row" id="stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="counter-ideas">0</div>
+                        <div class="stat-label">Ide Terkumpul</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">Aplikasi Terwujud</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">Rating Komunitas</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="section" id="features">
+            <div class="section-inner">
+                <div class="section-header">
+                    <p class="section-label">Mengapa IdeaLab?</p>
+                    <h2 class="section-title">Dari Ide Liar Menjadi Kenyataan</h2>
+                    <p class="section-desc">Kami percaya setiap ide hebat layak untuk diwujudkan. Ini yang membuat kami berbeda.</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon gold"><i class="fa-solid fa-lightbulb"></i></div>
+                        <h3>Bebas Beraspirasi</h3>
+                        <p>Sampaikan ide aplikasi apapun tanpa batasan. Dari yang sederhana hingga paling ambisius, semua kami dengar.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon purple"><i class="fa-solid fa-bolt"></i></div>
+                        <h3>Review Cepat</h3>
+                        <p>Setiap ide yang masuk akan direview oleh tim dalam 3×24 jam. Kamu akan mendapat notifikasi via email.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon teal"><i class="fa-solid fa-handshake"></i></div>
+                        <h3>Kolaborasi Langsung</h3>
+                        <p>Ide terpilih akan dikerjakan bersama kamu. Transparan, kolaboratif, dan kamu tetap jadi bagian dari proses.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon gold"><i class="fa-solid fa-lock"></i></div>
+                        <h3>Privasi Terjamin</h3>
+                        <p>Setiap ide yang kamu kirimkan terlindungi. Kami menjunjung tinggi kerahasiaan dan hak kekayaan intelektual.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Form Section -->
+        <section class="section" id="form-section">
+            <div class="section-inner">
+                <div class="section-header">
+                    <p class="section-label">Kirim Aspirasimu</p>
+                    <h2 class="section-title">Ceritakan Aplikasi Impianmu</h2>
+                    <p class="section-desc">Isi form di bawah ini dengan detail sebanyak mungkin agar kami bisa memahami visi kamu dengan jelas.</p>
+                </div>
+                <div class="form-card">
+                    <div class="glow-orb top-right"></div>
+                    <div class="glow-orb bottom-left"></div>
+                    <div class="form-content">
+                        <form id="ideaForm" action="https://formspree.io/f/mwvdejag" method="POST" novalidate>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fullName">Nama <span class="required">*</span></label>
+                                    <input type="text" id="fullName" name="fullName" placeholder="Misal: Hammam" required autocomplete="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Alamat Email <span class="required">*</span></label>
+                                    <input type="email" id="email" name="email" placeholder="hammam@gmail.com" required autocomplete="email">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="appName">Nama Aplikasi Impian <span class="required">*</span></label>
+                                    <input type="text" id="appName" name="appName" placeholder="Misal: BelanjaYuk" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="category">Kategori Aplikasi <span class="required">*</span></label>
+                                    <select id="category" name="category" required>
+                                        <option value="" disabled selected>Pilih kategori...</option>
+                                        <option value="E-Commerce">E-Commerce</option>
+                                        <option value="EdTech">Edukasi / EdTech</option>
+                                        <option value="FinTech">FinTech / Keuangan</option>
+                                        <option value="HealthTech">Kesehatan / HealthTech</option>
+                                        <option value="Social">Sosial Media</option>
+                                        <option value="Productivity">Produktivitas</option>
+                                        <option value="Gaming">Gaming</option>
+                                        <option value="AI">AI / Kecerdasan Buatan</option>
+                                        <option value="Other">Lainnya</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group full">
+                                <label for="description">Deskripsikan Aplikasi Impianmu <span class="required">*</span></label>
+                                <textarea id="description" name="description" placeholder="Ceritakan secara detail: masalah apa yang ingin dipecahkan, fitur-fitur utama, target pengguna, dan hal lain yang menurutmu penting..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit" id="submitBtn">
+                                <i class="fa-solid fa-paper-plane"></i> Kirim Aspirasi Sekarang
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2026 <span class="gold">IdeaLab</span></p>
+        </footer>
+    </div>
+
+    <!-- Success Overlay -->
+    <div class="success-overlay" id="successOverlay">
+        <div class="success-modal">
+            <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+            <h2>Aspirasi Terkirim! <i class="fa-solid fa-party-horn"></i></h2>
+            <p id="successMessage">Terima kasih! Ide "<strong id="submittedAppName"></strong>" telah kami terima. Tim kami akan meninjau dan menghubungi kamu melalui email dalam 3 hari kerja.</p>
+            <button class="btn-close-modal" onclick="closeModal()">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // === DISABLE CONTEXT MENU (no download/share/print) ===
+            document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+            // === FIREBASE INITIALIZATION ===
+            const firebaseConfig = {
+                apiKey: "AIzaSyCNWjE_z2DWsUrGKpMaR_NI2T04fhk2yz8",
+                authDomain: "idealab-631ce.firebaseapp.com",
+                projectId: "idealab-631ce",
+                storageBucket: "idealab-631ce.firebasestorage.app",
+                messagingSenderId: "770922728839",
+                appId: "1:770922728839:web:2ed1250f264df417c39722"
+            };
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+
+            // === PARTICLE BACKGROUND ===
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let mouseX = 0,
+                mouseY = 0;
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', () => {
+                resizeCanvas();
+                initParticles();
+            });
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                    this.y = Math.random() * canvas.height;
+                }
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = -10;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedY = Math.random() * 0.6 + 0.2;
+                    this.speedX = (Math.random() - 0.5) * 0.4;
+                    this.opacity = Math.random() * 0.5 + 0.2;
+                    this.hue = Math.random() < 0.3 ? 42 : 260; // gold or purple
+                }
+                update() {
+                    this.y += this.speedY;
+                    this.x += this.speedX + (mouseX - canvas.width / 2) * 0.0003;
+                    if (this.y > canvas.height + 10) {
+                        this.reset();
+                        this.y = -10;
+                    }
+                    if (this.x < -20) this.x = canvas.width + 20;
+                    if (this.x > canvas.width + 20) this.x = -20;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${this.hue}, 60%, 65%, ${this.opacity})`;
+                    ctx.fill();
+                    // glow
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${this.hue}, 60%, 65%, ${this.opacity * 0.1})`;
+                    ctx.fill();
+                }
+            }
+
+            function initParticles() {
+                const count = Math.min(Math.floor((canvas.width * canvas.height) / 12000), 150);
+                particles = [];
+                for (let i = 0; i < count; i++) {
+                    particles.push(new Particle());
+                }
+            }
+            initParticles();
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+            document.addEventListener('touchmove', (e) => {
+                mouseX = e.touches[0].clientX;
+                mouseY = e.touches[0].clientY;
+            }, { passive: true });
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                // draw connection lines between nearby particles
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 100) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(255,255,255,${0.02 * (1 - dist / 100)})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animate);
+            }
+            animate();
+
+            // === NAVBAR SCROLL EFFECT ===
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // === MOBILE NAV TOGGLE ===
+            const navToggle = document.getElementById('navToggle');
+            const navLinks = document.getElementById('navLinks');
+            navToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                });
+            });
+
+            // === GLOBAL COUNTER (Firestore) ===
+            const counterEl = document.getElementById('counter-ideas');
+            const statsDocRef = db.collection('stats').doc('ideTerkumpul');
+
+            // Initialize counter from Firestore (still updates even though hidden)
+            async function initCounter() {
+                try {
+                    const doc = await statsDocRef.get();
+                    if (doc.exists) {
+                        counterEl.textContent = doc.data().count.toLocaleString('en-US');
+                    } else {
+                        // create initial doc
+                        await statsDocRef.set({ count: 0 });
+                        counterEl.textContent = '0';
+                    }
+                } catch (e) {
+                    console.warn('Failed to load counter from Firebase, using fallback 0');
+                    counterEl.textContent = '0';
+                }
+            }
+            initCounter();
+
+            // Function to increment the counter in Firestore (atomic)
+            async function incrementGlobalCounter() {
+                try {
+                    await statsDocRef.update({
+                        count: firebase.firestore.FieldValue.increment(1)
+                    });
+                    // Fetch the updated count to show the latest value
+                    const updatedDoc = await statsDocRef.get();
+                    if (updatedDoc.exists) {
+                        counterEl.textContent = updatedDoc.data().count.toLocaleString('en-US');
+                    }
+                } catch (e) {
+                    console.error('Failed to increment counter in Firebase', e);
+                }
+            }
+
+            // === FORM SUBMISSION ===
+            const ideaForm = document.getElementById('ideaForm');
+            const successOverlay = document.getElementById('successOverlay');
+            const submittedAppName = document.getElementById('submittedAppName');
+            const submitBtn = document.getElementById('submitBtn');
+
+            ideaForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                // Basic validation
+                const fullName = document.getElementById('fullName').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const appName = document.getElementById('appName').value.trim();
+                const category = document.getElementById('category').value;
+                const description = document.getElementById('description').value.trim();
+
+                if (!fullName || !email || !appName || !category || !description) {
+                    const requiredFields = [document.getElementById('fullName'),
+                        document.getElementById('email'),
+                        document.getElementById('appName'),
+                        document.getElementById('category'),
+                        document.getElementById('description')
+                    ];
+                    requiredFields.forEach(field => {
+                        if (!field.value.trim()) {
+                            field.style.borderColor = '#e74c3c';
+                            field.style.boxShadow = '0 0 0 4px rgba(231,76,60,0.15)';
+                            setTimeout(() => {
+                                field.style.borderColor = 'rgba(255,255,255,0.06)';
+                                field.style.boxShadow = 'none';
+                            }, 1500);
+                        }
+                    });
+                    const firstEmpty = requiredFields.find(f => !f.value.trim());
+                    if (firstEmpty) firstEmpty.focus();
+                    return;
+                }
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    const emailField = document.getElementById('email');
+                    emailField.style.borderColor = '#e74c3c';
+                    emailField.style.boxShadow = '0 0 0 4px rgba(231,76,60,0.15)';
+                    emailField.focus();
+                    setTimeout(() => {
+                        emailField.style.borderColor = 'rgba(255,255,255,0.06)';
+                        emailField.style.boxShadow = 'none';
+                    }, 1500);
+                    return;
+                }
+
+                // Disable button & show loading
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim...';
+                submitBtn.style.opacity = '0.7';
+
+                try {
+                    // Send to Formspree
+                    const formspreeResponse = await fetch('https://formspree.io/f/mwvdejag', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            fullName,
+                            email,
+                            appName,
+                            category,
+                            description,
+                            timestamp: new Date().toISOString()
+                        })
+                    });
+
+                    if (formspreeResponse.ok) {
+                        // Store the idea in Firestore as well (for persistence)
+                        await db.collection('submissions').add({
+                            fullName,
+                            email,
+                            appName,
+                            category,
+                            description,
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+
+                        // Increment the global counter (even though hidden)
+                        await incrementGlobalCounter();
+
+                        // Show success
+                        submittedAppName.textContent = appName;
+                        successOverlay.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+
+                        // Reset form
+                        ideaForm.reset();
+                        document.getElementById('category').value = '';
+                    } else {
+                        alert('Gagal mengirim ke Formspree. Silakan coba lagi.');
+                    }
+                } catch (error) {
+                    alert('Terjadi kesalahan jaringan. Silakan coba lagi.');
+                } finally {
+                    // Reset button
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Aspirasi Sekarang';
+                    submitBtn.style.opacity = '1';
+                }
+            });
+
+            // === CLOSE MODAL ===
+            window.closeModal = function() {
+                successOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            };
+            successOverlay.addEventListener('click', function(e) {
+                if (e.target === successOverlay) {
+                    closeModal();
+                }
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && successOverlay.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+
+            // === SMOOTH SCROLL FOR ALL ANCHOR LINKS ===
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#') return;
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        const offset = 100;
+                        const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                        window.scrollTo({ top, behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // === INTERSECTION OBSERVER FOR FEATURE CARDS ===
+            const observerOptions = { threshold: 0.2, rootMargin: '0px 0px -50px 0px' };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.feature-card').forEach((card, i) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(40px)';
+                card.style.transition = `all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1.2) ${i * 0.1}s`;
+                observer.observe(card);
+            });
+
+            // Also observe form card
+            const formCard = document.querySelector('.form-card');
+            if (formCard) {
+                formCard.style.opacity = '0';
+                formCard.style.transform = 'translateY(30px)';
+                formCard.style.transition = 'all 0.7s cubic-bezier(0.25, 0.8, 0.25, 1.2) 0.2s';
+                const formObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    });
+                }, { threshold: 0.15 });
+                formObserver.observe(formCard);
+            }
+
+            console.log('IdeaLab — Siap Mewujudkan Aplikasi Impianmu!');
+            console.log('Kirim idemu melalui form di atas dan jadilah bagian dari inovasi.');
+        })();
+    </script>
+</body>
+</html>
