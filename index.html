@@ -18,20 +18,21 @@
             --surface: #12121a;
             --surface-2: #1a1a26;
             --surface-3: #222233;
-            --gold: #d4a745;
-            --gold-light: #e8c96a;
-            --gold-dark: #b8912e;
+            /* Blue scheme */
+            --gold: #3b82f6;
+            --gold-light: #60a5fa;
+            --gold-dark: #2563eb;
             --text: #e8e8f0;
             --text-secondary: #a0a0b8;
             --text-muted: #6a6a80;
             --accent: #7c5ce7;
             --accent-light: #9b7ef0;
             --border: rgba(255, 255, 255, 0.06);
-            --border-gold: rgba(212, 167, 69, 0.25);
-            --gradient-1: linear-gradient(135deg, #d4a745 0%, #e8c96a 40%, #c9983a 100%);
+            --border-gold: rgba(59, 130, 246, 0.25);
+            --gradient-1: linear-gradient(135deg, #3b82f6 0%, #60a5fa 40%, #2563eb 100%);
             --gradient-2: linear-gradient(135deg, #7c5ce7 0%, #5b3dc7 100%);
             --gradient-3: linear-gradient(160deg, #0a0a0f 0%, #12121a 50%, #1a1530 100%);
-            --shadow-gold: 0 0 60px rgba(212, 167, 69, 0.15);
+            --shadow-gold: 0 0 60px rgba(59, 130, 246, 0.15);
             --shadow-accent: 0 0 40px rgba(124, 92, 231, 0.2);
             --radius-sm: 10px;
             --radius: 16px;
@@ -50,7 +51,6 @@
 
         html {
             scroll-behavior: smooth;
-            /* Prevent pinch-to-zoom while keeping scroll */
             touch-action: pan-x pan-y;
         }
 
@@ -64,7 +64,6 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* === CANVAS PARTICLES === */
         #particle-canvas {
             position: fixed;
             top: 0;
@@ -76,13 +75,11 @@
             opacity: 0.55;
         }
 
-        /* === MAIN WRAPPER === */
         .main-wrapper {
             position: relative;
             z-index: 1;
         }
 
-        /* === NAVIGATION === */
         .navbar {
             display: flex;
             align-items: center;
@@ -127,7 +124,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
-            color: #0a0a0f;
+            color: #fff;
             font-weight: 900;
             box-shadow: var(--shadow-gold);
         }
@@ -164,19 +161,19 @@
         }
         .nav-cta {
             background: var(--gradient-1);
-            color: #0a0a0f !important;
+            color: #fff !important;
             padding: 10px 22px;
             border-radius: 40px;
             font-weight: 700 !important;
             font-size: 0.9rem !important;
             transition: all 0.3s ease !important;
-            box-shadow: 0 4px 20px rgba(212, 167, 69, 0.3);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
             letter-spacing: 0.3px;
         }
         .nav-cta:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(212, 167, 69, 0.45) !important;
-            color: #0a0a0f !important;
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.45) !important;
+            color: #fff !important;
         }
         .nav-cta::after {
             display: none !important;
@@ -199,7 +196,6 @@
             transition: var(--transition);
         }
 
-        /* === HERO === */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -236,13 +232,8 @@
             animation: pulse-dot 1.8s infinite;
         }
         @keyframes pulse-dot {
-            0%,
-            100% {
-                box-shadow: 0 0 0 0 rgba(124, 92, 231, 0.7);
-            }
-            50% {
-                box-shadow: 0 0 0 14px rgba(124, 92, 231, 0);
-            }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(124, 92, 231, 0.7); }
+            50% { box-shadow: 0 0 0 14px rgba(124, 92, 231, 0); }
         }
         .hero-title {
             font-family: 'Playfair Display', serif;
@@ -298,13 +289,13 @@
         }
         .btn-primary {
             background: var(--gradient-1);
-            color: #0a0a0f;
-            box-shadow: 0 6px 30px rgba(212, 167, 69, 0.35);
+            color: #fff;
+            box-shadow: 0 6px 30px rgba(59, 130, 246, 0.35);
             font-weight: 700;
         }
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 40px rgba(212, 167, 69, 0.5);
+            box-shadow: 0 12px 40px rgba(59, 130, 246, 0.5);
         }
         .btn-outline {
             background: transparent;
@@ -317,22 +308,14 @@
             transform: translateY(-3px);
         }
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* === STATS ROW (NOW HIDDEN) === */
         .stats-row {
             display: none;
         }
 
-        /* === SECTION GENERAL === */
         .section {
             padding: 100px 40px;
             position: relative;
@@ -368,7 +351,6 @@
             font-size: 1rem;
         }
 
-        /* === FEATURES === */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -390,7 +372,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at center, rgba(212, 167, 69, 0.04) 0%, transparent 70%);
+            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.04) 0%, transparent 70%);
             opacity: 0;
             transition: opacity 0.5s ease;
             pointer-events: none;
@@ -415,7 +397,7 @@
             font-weight: 700;
         }
         .feature-icon.gold {
-            background: rgba(212, 167, 69, 0.12);
+            background: rgba(59, 130, 246, 0.12);
             color: var(--gold-light);
         }
         .feature-icon.purple {
@@ -438,7 +420,6 @@
             line-height: 1.6;
         }
 
-        /* === FORM SECTION === */
         #form-section {
             scroll-margin-top: 100px;
         }
@@ -531,7 +512,7 @@
         .form-group select:focus,
         .form-group textarea:focus {
             border-color: var(--gold);
-            box-shadow: 0 0 0 4px rgba(212, 167, 69, 0.08);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08);
             background: var(--surface-3);
         }
         .form-group textarea {
@@ -557,25 +538,24 @@
             font-size: 1.05rem;
             font-weight: 700;
             background: var(--gradient-1);
-            color: #0a0a0f;
+            color: #fff;
             border: none;
             border-radius: 50px;
             cursor: none;
             transition: all 0.35s ease;
             letter-spacing: 0.5px;
-            box-shadow: 0 6px 30px rgba(212, 167, 69, 0.3);
+            box-shadow: 0 6px 30px rgba(59, 130, 246, 0.3);
             font-family: 'Inter', sans-serif;
             margin-top: 10px;
         }
         .btn-submit:hover {
             transform: translateY(-3px);
-            box-shadow: 0 14px 44px rgba(212, 167, 69, 0.5);
+            box-shadow: 0 14px 44px rgba(59, 130, 246, 0.5);
         }
         .btn-submit:active {
             transform: scale(0.97);
         }
 
-        /* === SUCCESS OVERLAY === */
         .success-overlay {
             position: fixed;
             top: 0;
@@ -609,14 +589,8 @@
             animation: modalPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
         @keyframes modalPop {
-            from {
-                transform: scale(0.85);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
+            from { transform: scale(0.85); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
         .success-icon {
             width: 70px;
@@ -628,9 +602,9 @@
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            color: #0a0a0f;
+            color: #fff;
             font-weight: 900;
-            box-shadow: 0 0 40px rgba(212, 167, 69, 0.4);
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.4);
         }
         .success-modal h2 {
             font-family: 'Playfair Display', serif;
@@ -658,7 +632,6 @@
             border-color: rgba(255, 255, 255, 0.3);
         }
 
-        /* === FOOTER === */
         .footer {
             text-align: center;
             padding: 40px;
@@ -673,7 +646,6 @@
             font-weight: 600;
         }
 
-        /* === RESPONSIVE === */
         @media (max-width: 768px) {
             .navbar {
                 padding: 14px 20px;
@@ -729,10 +701,8 @@
 </head>
 <body>
 
-    <!-- Particle Canvas -->
     <canvas id="particle-canvas"></canvas>
 
-    <!-- Main Wrapper -->
     <div class="main-wrapper">
 
         <!-- Navigation -->
@@ -769,7 +739,6 @@
                         Pelajari Lebih Lanjut <i class="fa-solid fa-arrow-down"></i>
                     </a>
                 </div>
-                <!-- Stats row hidden via CSS -->
                 <div class="stats-row" id="stats">
                     <div class="stat-item">
                         <div class="stat-number" id="counter-ideas">0</div>
@@ -820,7 +789,7 @@
             </div>
         </section>
 
-        <!-- Form Section -->
+        <!-- Form Section (Email removed) -->
         <section class="section" id="form-section">
             <div class="section-inner">
                 <div class="section-header">
@@ -839,16 +808,12 @@
                                     <input type="text" id="fullName" name="fullName" placeholder="Misal: Hammam" required autocomplete="name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Alamat Email <span class="required">*</span></label>
-                                    <input type="email" id="email" name="email" placeholder="hammam@gmail.com" required autocomplete="email">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
                                     <label for="appName">Nama Aplikasi Impian <span class="required">*</span></label>
                                     <input type="text" id="appName" name="appName" placeholder="Misal: BelanjaYuk" required>
                                 </div>
-                                <div class="form-group">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group full">
                                     <label for="category">Kategori Aplikasi <span class="required">*</span></label>
                                     <select id="category" name="category" required>
                                         <option value="" disabled selected>Pilih kategori...</option>
@@ -877,28 +842,25 @@
             </div>
         </section>
 
-        <!-- Footer -->
         <footer class="footer">
             <p>© 2026 <span class="gold">IdeaLab</span></p>
         </footer>
     </div>
 
-    <!-- Success Overlay -->
     <div class="success-overlay" id="successOverlay">
         <div class="success-modal">
             <div class="success-icon"><i class="fa-solid fa-check"></i></div>
             <h2>Aspirasi Terkirim! <i class="fa-solid fa-party-horn"></i></h2>
-            <p id="successMessage">Terima kasih! Ide "<strong id="submittedAppName"></strong>" telah kami terima. Tim kami akan meninjau dan menghubungi kamu melalui email dalam 3 hari kerja.</p>
+            <p id="successMessage">Terima kasih! Ide "<strong id="submittedAppName"></strong>" telah kami terima. Tim kami akan meninjau dalam 3 hari kerja.</p>
             <button class="btn-close-modal" onclick="closeModal()">Tutup</button>
         </div>
     </div>
 
     <script>
         (function() {
-            // === DISABLE CONTEXT MENU (no download/share/print) ===
             document.addEventListener('contextmenu', (e) => e.preventDefault());
 
-            // === FIREBASE INITIALIZATION ===
+            // Firebase init
             const firebaseConfig = {
                 apiKey: "AIzaSyCNWjE_z2DWsUrGKpMaR_NI2T04fhk2yz8",
                 authDomain: "idealab-631ce.firebaseapp.com",
@@ -910,22 +872,16 @@
             firebase.initializeApp(firebaseConfig);
             const db = firebase.firestore();
 
-            // === PARTICLE BACKGROUND ===
+            // Particle background
             const canvas = document.getElementById('particle-canvas');
             const ctx = canvas.getContext('2d');
-            let particles = [];
-            let mouseX = 0,
-                mouseY = 0;
-
+            let particles = [], mouseX = 0, mouseY = 0;
             function resizeCanvas() {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
             }
             resizeCanvas();
-            window.addEventListener('resize', () => {
-                resizeCanvas();
-                initParticles();
-            });
+            window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
 
             class Particle {
                 constructor() {
@@ -939,66 +895,46 @@
                     this.speedY = Math.random() * 0.6 + 0.2;
                     this.speedX = (Math.random() - 0.5) * 0.4;
                     this.opacity = Math.random() * 0.5 + 0.2;
-                    this.hue = Math.random() < 0.3 ? 42 : 260; // gold or purple
+                    this.hue = Math.random() < 0.3 ? 210 : 260;
                 }
                 update() {
                     this.y += this.speedY;
-                    this.x += this.speedX + (mouseX - canvas.width / 2) * 0.0003;
-                    if (this.y > canvas.height + 10) {
-                        this.reset();
-                        this.y = -10;
-                    }
+                    this.x += this.speedX + (mouseX - canvas.width/2) * 0.0003;
+                    if (this.y > canvas.height + 10) { this.reset(); this.y = -10; }
                     if (this.x < -20) this.x = canvas.width + 20;
                     if (this.x > canvas.width + 20) this.x = -20;
                 }
                 draw() {
                     ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `hsla(${this.hue}, 60%, 65%, ${this.opacity})`;
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+                    ctx.fillStyle = `hsla(${this.hue},60%,65%,${this.opacity})`;
                     ctx.fill();
-                    // glow
                     ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
-                    ctx.fillStyle = `hsla(${this.hue}, 60%, 65%, ${this.opacity * 0.1})`;
+                    ctx.arc(this.x, this.y, this.size*3, 0, Math.PI*2);
+                    ctx.fillStyle = `hsla(${this.hue},60%,65%,${this.opacity*0.1})`;
                     ctx.fill();
                 }
             }
-
             function initParticles() {
-                const count = Math.min(Math.floor((canvas.width * canvas.height) / 12000), 150);
+                const count = Math.min(Math.floor((canvas.width * canvas.height)/12000), 150);
                 particles = [];
-                for (let i = 0; i < count; i++) {
-                    particles.push(new Particle());
-                }
+                for (let i=0; i<count; i++) particles.push(new Particle());
             }
             initParticles();
-
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-            });
-            document.addEventListener('touchmove', (e) => {
-                mouseX = e.touches[0].clientX;
-                mouseY = e.touches[0].clientY;
-            }, { passive: true });
-
+            document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+            document.addEventListener('touchmove', e => { mouseX = e.touches[0].clientX; mouseY = e.touches[0].clientY; }, {passive: true});
             function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                particles.forEach(p => {
-                    p.update();
-                    p.draw();
-                });
-                // draw connection lines between nearby particles
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                particles.forEach(p => { p.update(); p.draw(); });
+                for (let i=0; i<particles.length; i++) {
+                    for (let j=i+1; j<particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx*dx+dy*dy);
                         if (dist < 100) {
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = `rgba(255,255,255,${0.02 * (1 - dist / 100)})`;
+                            ctx.strokeStyle = `rgba(255,255,255,${0.02*(1-dist/100)})`;
                             ctx.lineWidth = 0.5;
                             ctx.stroke();
                         }
@@ -1008,67 +944,37 @@
             }
             animate();
 
-            // === NAVBAR SCROLL EFFECT ===
+            // Navbar
             const navbar = document.getElementById('navbar');
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
+                navbar.classList.toggle('scrolled', window.scrollY > 50);
             });
+            const navToggle = document.getElementById('navToggle'), navLinks = document.getElementById('navLinks');
+            navToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
+            navLinks.querySelectorAll('a').forEach(l => l.addEventListener('click', () => navLinks.classList.remove('active')));
 
-            // === MOBILE NAV TOGGLE ===
-            const navToggle = document.getElementById('navToggle');
-            const navLinks = document.getElementById('navLinks');
-            navToggle.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
-            navLinks.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                });
-            });
-
-            // === GLOBAL COUNTER (Firestore) ===
+            // Firebase counter
             const counterEl = document.getElementById('counter-ideas');
             const statsDocRef = db.collection('stats').doc('ideTerkumpul');
-
-            // Initialize counter from Firestore (still updates even though hidden)
             async function initCounter() {
                 try {
                     const doc = await statsDocRef.get();
-                    if (doc.exists) {
-                        counterEl.textContent = doc.data().count.toLocaleString('en-US');
-                    } else {
-                        // create initial doc
-                        await statsDocRef.set({ count: 0 });
-                        counterEl.textContent = '0';
-                    }
-                } catch (e) {
-                    console.warn('Failed to load counter from Firebase, using fallback 0');
+                    counterEl.textContent = doc.exists ? doc.data().count.toLocaleString('en-US') : '0';
+                    if (!doc.exists) await statsDocRef.set({count:0});
+                } catch(e) {
                     counterEl.textContent = '0';
                 }
             }
             initCounter();
-
-            // Function to increment the counter in Firestore (atomic)
             async function incrementGlobalCounter() {
                 try {
-                    await statsDocRef.update({
-                        count: firebase.firestore.FieldValue.increment(1)
-                    });
-                    // Fetch the updated count to show the latest value
-                    const updatedDoc = await statsDocRef.get();
-                    if (updatedDoc.exists) {
-                        counterEl.textContent = updatedDoc.data().count.toLocaleString('en-US');
-                    }
-                } catch (e) {
-                    console.error('Failed to increment counter in Firebase', e);
-                }
+                    await statsDocRef.update({count: firebase.firestore.FieldValue.increment(1)});
+                    const updated = await statsDocRef.get();
+                    if (updated.exists) counterEl.textContent = updated.data().count.toLocaleString('en-US');
+                } catch(e) {}
             }
 
-            // === FORM SUBMISSION ===
+            // Form submission (no email)
             const ideaForm = document.getElementById('ideaForm');
             const successOverlay = document.getElementById('successOverlay');
             const submittedAppName = document.getElementById('submittedAppName');
@@ -1076,137 +982,82 @@
 
             ideaForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
-
-                // Basic validation
                 const fullName = document.getElementById('fullName').value.trim();
-                const email = document.getElementById('email').value.trim();
                 const appName = document.getElementById('appName').value.trim();
                 const category = document.getElementById('category').value;
                 const description = document.getElementById('description').value.trim();
 
-                if (!fullName || !email || !appName || !category || !description) {
-                    const requiredFields = [document.getElementById('fullName'),
-                        document.getElementById('email'),
-                        document.getElementById('appName'),
-                        document.getElementById('category'),
-                        document.getElementById('description')
-                    ];
-                    requiredFields.forEach(field => {
-                        if (!field.value.trim()) {
-                            field.style.borderColor = '#e74c3c';
-                            field.style.boxShadow = '0 0 0 4px rgba(231,76,60,0.15)';
-                            setTimeout(() => {
-                                field.style.borderColor = 'rgba(255,255,255,0.06)';
-                                field.style.boxShadow = 'none';
-                            }, 1500);
+                if (!fullName || !appName || !category || !description) {
+                    const fields = ['fullName','appName','category','description'].map(id => document.getElementById(id));
+                    fields.forEach(f => {
+                        if (!f.value.trim()) {
+                            f.style.borderColor = '#e74c3c';
+                            f.style.boxShadow = '0 0 0 4px rgba(231,76,60,0.15)';
+                            setTimeout(() => { f.style.borderColor = 'rgba(255,255,255,0.06)'; f.style.boxShadow = 'none'; }, 1500);
                         }
                     });
-                    const firstEmpty = requiredFields.find(f => !f.value.trim());
+                    const firstEmpty = fields.find(f => !f.value.trim());
                     if (firstEmpty) firstEmpty.focus();
                     return;
                 }
 
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    const emailField = document.getElementById('email');
-                    emailField.style.borderColor = '#e74c3c';
-                    emailField.style.boxShadow = '0 0 0 4px rgba(231,76,60,0.15)';
-                    emailField.focus();
-                    setTimeout(() => {
-                        emailField.style.borderColor = 'rgba(255,255,255,0.06)';
-                        emailField.style.boxShadow = 'none';
-                    }, 1500);
-                    return;
-                }
-
-                // Disable button & show loading
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim...';
                 submitBtn.style.opacity = '0.7';
 
                 try {
-                    // Send to Formspree
-                    const formspreeResponse = await fetch('https://formspree.io/f/mwvdejag', {
+                    const response = await fetch('https://formspree.io/f/mwvdejag', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            fullName,
-                            email,
-                            appName,
-                            category,
-                            description,
-                            timestamp: new Date().toISOString()
-                        })
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ fullName, appName, category, description, timestamp: new Date().toISOString() })
                     });
 
-                    if (formspreeResponse.ok) {
-                        // Store the idea in Firestore as well (for persistence)
+                    if (response.ok) {
                         await db.collection('submissions').add({
-                            fullName,
-                            email,
-                            appName,
-                            category,
-                            description,
+                            fullName, appName, category, description,
                             timestamp: firebase.firestore.FieldValue.serverTimestamp()
                         });
-
-                        // Increment the global counter (even though hidden)
                         await incrementGlobalCounter();
-
-                        // Show success
                         submittedAppName.textContent = appName;
                         successOverlay.classList.add('active');
                         document.body.style.overflow = 'hidden';
-
-                        // Reset form
                         ideaForm.reset();
                         document.getElementById('category').value = '';
                     } else {
-                        alert('Gagal mengirim ke Formspree. Silakan coba lagi.');
+                        alert('Gagal mengirim. Coba lagi.');
                     }
-                } catch (error) {
-                    alert('Terjadi kesalahan jaringan. Silakan coba lagi.');
+                } catch (err) {
+                    alert('Kesalahan jaringan.');
                 } finally {
-                    // Reset button
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Aspirasi Sekarang';
                     submitBtn.style.opacity = '1';
                 }
             });
 
-            // === CLOSE MODAL ===
+            // Close modal
             window.closeModal = function() {
                 successOverlay.classList.remove('active');
                 document.body.style.overflow = '';
             };
-            successOverlay.addEventListener('click', function(e) {
-                if (e.target === successOverlay) {
-                    closeModal();
-                }
-            });
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && successOverlay.classList.contains('active')) {
-                    closeModal();
-                }
-            });
+            successOverlay.addEventListener('click', e => { if (e.target === successOverlay) closeModal(); });
+            document.addEventListener('keydown', e => { if (e.key === 'Escape' && successOverlay.classList.contains('active')) closeModal(); });
 
-            // === SMOOTH SCROLL FOR ALL ANCHOR LINKS ===
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
+            // Smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(a => {
+                a.addEventListener('click', function(e) {
                     const href = this.getAttribute('href');
                     if (href === '#') return;
                     e.preventDefault();
                     const target = document.querySelector(href);
                     if (target) {
-                        const offset = 100;
-                        const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                        window.scrollTo({ top, behavior: 'smooth' });
+                        const top = target.getBoundingClientRect().top + window.pageYOffset - 100;
+                        window.scrollTo({top, behavior:'smooth'});
                     }
                 });
             });
 
-            // === INTERSECTION OBSERVER FOR FEATURE CARDS ===
-            const observerOptions = { threshold: 0.2, rootMargin: '0px 0px -50px 0px' };
+            // Intersection Observer
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1214,22 +1065,19 @@
                         entry.target.style.transform = 'translateY(0)';
                     }
                 });
-            }, observerOptions);
-
+            }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
             document.querySelectorAll('.feature-card').forEach((card, i) => {
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(40px)';
-                card.style.transition = `all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1.2) ${i * 0.1}s`;
+                card.style.transition = `all 0.6s cubic-bezier(0.25,0.8,0.25,1.2) ${i*0.1}s`;
                 observer.observe(card);
             });
-
-            // Also observe form card
             const formCard = document.querySelector('.form-card');
             if (formCard) {
                 formCard.style.opacity = '0';
                 formCard.style.transform = 'translateY(30px)';
-                formCard.style.transition = 'all 0.7s cubic-bezier(0.25, 0.8, 0.25, 1.2) 0.2s';
-                const formObserver = new IntersectionObserver((entries) => {
+                formCard.style.transition = 'all 0.7s cubic-bezier(0.25,0.8,0.25,1.2) 0.2s';
+                const formObs = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             entry.target.style.opacity = '1';
@@ -1237,11 +1085,8 @@
                         }
                     });
                 }, { threshold: 0.15 });
-                formObserver.observe(formCard);
+                formObs.observe(formCard);
             }
-
-            console.log('IdeaLab — Siap Mewujudkan Aplikasi Impianmu!');
-            console.log('Kirim idemu melalui form di atas dan jadilah bagian dari inovasi.');
         })();
     </script>
 </body>
