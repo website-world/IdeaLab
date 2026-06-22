@@ -7,18 +7,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6 for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <style>
         :root {
             --bg: #0a0a0f;
             --surface: #12121a;
             --surface-2: #1a1a26;
             --surface-3: #222233;
-            /* Blue scheme */
             --gold: #3b82f6;
             --gold-light: #60a5fa;
             --gold-dark: #2563eb;
@@ -209,32 +204,6 @@
             max-width: 800px;
             z-index: 2;
         }
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(124, 92, 231, 0.12);
-            border: 1px solid rgba(124, 92, 231, 0.3);
-            padding: 8px 18px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--accent-light);
-            margin-bottom: 28px;
-            letter-spacing: 0.5px;
-            animation: fadeInUp 0.8s ease forwards;
-        }
-        .hero-badge .dot {
-            width: 8px;
-            height: 8px;
-            background: var(--accent-light);
-            border-radius: 50%;
-            animation: pulse-dot 1.8s infinite;
-        }
-        @keyframes pulse-dot {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(124, 92, 231, 0.7); }
-            50% { box-shadow: 0 0 0 14px rgba(124, 92, 231, 0); }
-        }
         .hero-title {
             font-family: 'Playfair Display', serif;
             font-size: clamp(2.8rem, 6vw, 4.5rem);
@@ -312,10 +281,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .stats-row {
-            display: none;
-        }
-
         .section {
             padding: 100px 40px;
             position: relative;
@@ -377,9 +342,7 @@
             transition: opacity 0.5s ease;
             pointer-events: none;
         }
-        .feature-card:hover::before {
-            opacity: 1;
-        }
+        .feature-card:hover::before { opacity: 1; }
         .feature-card:hover {
             border-color: var(--border-gold);
             transform: translateY(-6px);
@@ -394,35 +357,14 @@
             justify-content: center;
             font-size: 1.5rem;
             margin-bottom: 18px;
-            font-weight: 700;
         }
-        .feature-icon.gold {
-            background: rgba(59, 130, 246, 0.12);
-            color: var(--gold-light);
-        }
-        .feature-icon.purple {
-            background: rgba(124, 92, 231, 0.12);
-            color: var(--accent-light);
-        }
-        .feature-icon.teal {
-            background: rgba(45, 212, 191, 0.12);
-            color: #2dd4bf;
-        }
-        .feature-card h3 {
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 6px;
-            letter-spacing: -0.3px;
-        }
-        .feature-card p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
+        .feature-icon.gold { background: rgba(59,130,246,0.12); color: var(--gold-light); }
+        .feature-icon.purple { background: rgba(124,92,231,0.12); color: var(--accent-light); }
+        .feature-icon.teal { background: rgba(45,212,191,0.12); color: #2dd4bf; }
+        .feature-card h3 { font-weight: 700; font-size: 1.1rem; margin-bottom: 6px; }
+        .feature-card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
 
-        #form-section {
-            scroll-margin-top: 100px;
-        }
+        #form-section { scroll-margin-top: 100px; }
         .form-card {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -430,16 +372,14 @@
             padding: 48px 40px;
             max-width: 750px;
             margin: 0 auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
             position: relative;
             overflow: hidden;
         }
         .form-card::after {
             content: '';
             position: absolute;
-            top: -1px;
-            left: 20%;
-            right: 20%;
+            top: -1px; left: 20%; right: 20%;
             height: 1px;
             background: var(--gradient-1);
             opacity: 0.5;
@@ -447,56 +387,27 @@
         }
         .form-card .glow-orb {
             position: absolute;
-            width: 300px;
-            height: 300px;
+            width: 300px; height: 300px;
             border-radius: 50%;
             filter: blur(120px);
             opacity: 0.06;
             pointer-events: none;
             z-index: 0;
         }
-        .form-card .glow-orb.top-right {
-            top: -100px;
-            right: -100px;
-            background: var(--gold);
-        }
-        .form-card .glow-orb.bottom-left {
-            bottom: -100px;
-            left: -100px;
-            background: var(--accent);
-        }
-        .form-content {
-            position: relative;
-            z-index: 1;
-        }
+        .form-card .glow-orb.top-right { top: -100px; right: -100px; background: var(--gold); }
+        .form-card .glow-orb.bottom-left { bottom: -100px; left: -100px; background: var(--accent); }
+        .form-content { position: relative; z-index: 1; }
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
             margin-bottom: 20px;
         }
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-            margin-bottom: 20px;
-        }
-        .form-group.full {
-            grid-column: 1 / -1;
-        }
-        .form-group label {
-            font-weight: 600;
-            font-size: 0.85rem;
-            letter-spacing: 0.3px;
-            color: var(--text);
-        }
-        .form-group label .required {
-            color: var(--gold);
-            margin-left: 2px;
-        }
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .form-group { display: flex; flex-direction: column; gap: 7px; margin-bottom: 20px; }
+        .form-group.full { grid-column: 1 / -1; }
+        .form-group label { font-weight: 600; font-size: 0.85rem; letter-spacing: 0.3px; color: var(--text); }
+        .form-group label .required { color: var(--gold); margin-left: 2px; }
+        .form-group input, .form-group select, .form-group textarea {
             background: var(--surface-2);
             border: 1.5px solid var(--border);
             border-radius: var(--radius-sm);
@@ -508,30 +419,21 @@
             width: 100%;
             outline: none;
         }
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             border-color: var(--gold);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08);
+            box-shadow: 0 0 0 4px rgba(59,130,246,0.08);
             background: var(--surface-3);
         }
-        .form-group textarea {
-            min-height: 220px;
-            resize: none;
-        }
+        .form-group textarea { min-height: 220px; resize: none; }
         .form-group select {
             appearance: none;
-            -webkit-appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a0a0b8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 16px center;
             padding-right: 40px;
             cursor: none;
         }
-        .form-group select option {
-            background: var(--surface-2);
-            color: #fff;
-        }
+        .form-group select option { background: var(--surface-2); color: #fff; }
         .btn-submit {
             width: 100%;
             padding: 16px;
@@ -544,219 +446,107 @@
             cursor: none;
             transition: all 0.35s ease;
             letter-spacing: 0.5px;
-            box-shadow: 0 6px 30px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 6px 30px rgba(59,130,246,0.3);
             font-family: 'Inter', sans-serif;
             margin-top: 10px;
         }
-        .btn-submit:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 14px 44px rgba(59, 130, 246, 0.5);
-        }
-        .btn-submit:active {
-            transform: scale(0.97);
-        }
+        .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 14px 44px rgba(59,130,246,0.5); }
+        .btn-submit:active { transform: scale(0.97); }
 
         .success-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.75);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75);
             z-index: 999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
             transition: opacity 0.4s ease;
             backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
         }
-        .success-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
+        .success-overlay.active { opacity: 1; pointer-events: all; }
         .success-modal {
             background: var(--surface);
             border: 1px solid var(--border-gold);
             border-radius: var(--radius-xl);
             padding: 50px 36px;
             text-align: center;
-            max-width: 480px;
-            width: 90%;
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), var(--shadow-gold);
-            animation: modalPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            max-width: 480px; width: 90%;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.7), var(--shadow-gold);
+            animation: modalPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
         }
         @keyframes modalPop {
             from { transform: scale(0.85); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
         .success-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
+            width: 70px; height: 70px; border-radius: 50%;
             background: var(--gradient-1);
             margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: #fff;
-            font-weight: 900;
-            box-shadow: 0 0 40px rgba(59, 130, 246, 0.4);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; color: #fff; font-weight: 900;
+            box-shadow: 0 0 40px rgba(59,130,246,0.4);
         }
-        .success-modal h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-        }
-        .success-modal p {
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-            font-size: 0.95rem;
-        }
+        .success-modal h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 8px; }
+        .success-modal p { color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem; }
         .btn-close-modal {
-            background: var(--surface-3);
-            color: #fff;
-            border: 1px solid var(--border);
-            padding: 12px 28px;
-            border-radius: 50px;
-            cursor: none;
-            font-weight: 600;
-            transition: var(--transition);
-            font-family: 'Inter', sans-serif;
+            background: var(--surface-3); color: #fff;
+            border: 1px solid var(--border); padding: 12px 28px;
+            border-radius: 50px; cursor: none; font-weight: 600;
+            transition: var(--transition); font-family: 'Inter', sans-serif;
         }
-        .btn-close-modal:hover {
-            background: var(--surface-3);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
+        .btn-close-modal:hover { background: var(--surface-3); border-color: rgba(255,255,255,0.3); }
 
         .footer {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
+            text-align: center; padding: 40px;
+            color: var(--text-muted); font-size: 0.85rem;
             border-top: 1px solid var(--border);
-            position: relative;
-            z-index: 2;
+            position: relative; z-index: 2;
         }
-        .footer .gold {
-            color: var(--gold);
-            font-weight: 600;
-        }
+        .footer .gold { color: var(--gold); font-weight: 600; }
 
         @media (max-width: 768px) {
-            .navbar {
-                padding: 14px 20px;
-                width: calc(100% - 30px);
-                top: 10px;
-                border-radius: 40px;
-            }
+            .navbar { padding: 14px 20px; width: calc(100% - 30px); top: 10px; border-radius: 40px; }
             .nav-links {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100vh;
-                background: rgba(10, 10, 15, 0.97);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 28px;
-                z-index: 100;
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
+                display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+                background: rgba(10,10,15,0.97); flex-direction: column;
+                justify-content: center; align-items: center; gap: 28px;
+                z-index: 100; backdrop-filter: blur(20px);
             }
-            .nav-links.active {
-                display: flex;
-            }
-            .nav-links a {
-                font-size: 1.2rem;
-            }
-            .nav-toggle {
-                display: flex;
-            }
-            .hero {
-                padding: 120px 20px 60px;
-            }
-            .section {
-                padding: 60px 20px;
-            }
-            .form-card {
-                padding: 30px 20px;
-                border-radius: var(--radius-lg);
-            }
-            .form-row {
-                grid-template-columns: 1fr;
-                gap: 0;
-            }
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
+            .nav-links.active { display: flex; }
+            .nav-links a { font-size: 1.2rem; }
+            .nav-toggle { display: flex; }
+            .hero { padding: 120px 20px 60px; }
+            .section { padding: 60px 20px; }
+            .form-card { padding: 30px 20px; border-radius: var(--radius-lg); }
+            .form-row { grid-template-columns: 1fr; gap: 0; }
+            .hero-buttons { flex-direction: column; align-items: center; }
         }
     </style>
 </head>
 <body>
-
     <canvas id="particle-canvas"></canvas>
 
     <div class="main-wrapper">
-
-        <!-- Navigation -->
         <nav class="navbar" id="navbar">
-            <a href="#" class="nav-logo">
-                <span class="logo-icon"><i class="fa-regular fa-gem"></i></span> IdeaLab
-            </a>
+            <a href="#" class="nav-logo"><span class="logo-icon"><i class="fa-regular fa-gem"></i></span> IdeaLab</a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#features">Mengapa</a></li>
                 <li><a href="#form-section">Kirim Ide</a></li>
                 <li><a href="#form-section" class="nav-cta">Mulai Sekarang</a></li>
             </ul>
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-                <span></span><span></span><span></span>
-            </button>
+            <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
         </nav>
 
-        <!-- Hero -->
         <section class="hero">
             <div class="hero-inner">
-                <h1 class="hero-title">
-                    Aplikasi Impianmu,<br><span class="gold">Kami Wujudkan.</span>
-                </h1>
-                <p class="hero-subtitle">
-                    Punya ide brilian untuk sebuah aplikasi? Sampaikan aspirasimu di sini.
-                    Tim developer kami siap mendengarkan dan mewujudkannya
-                    menjadi produk nyata yang siap digunakan.
-                </p>
+                <h1 class="hero-title">Aplikasi Impianmu,<br><span class="gold">Kami Wujudkan.</span></h1>
+                <p class="hero-subtitle">Punya ide brilian untuk sebuah aplikasi? Sampaikan aspirasimu di sini. Tim developer kami siap mendengarkan dan mewujudkannya menjadi produk nyata yang siap digunakan.</p>
                 <div class="hero-buttons">
-                    <a href="#form-section" class="btn btn-primary">
-                        <i class="fa-solid fa-paper-plane"></i> Kirim Ide Sekarang
-                    </a>
-                    <a href="#features" class="btn btn-outline">
-                        Pelajari Lebih Lanjut <i class="fa-solid fa-arrow-down"></i>
-                    </a>
-                </div>
-                <div class="stats-row" id="stats">
-                    <div class="stat-item">
-                        <div class="stat-number" id="counter-ideas">0</div>
-                        <div class="stat-label">Ide Terkumpul</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">0</div>
-                        <div class="stat-label">Aplikasi Terwujud</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">0</div>
-                        <div class="stat-label">Rating Komunitas</div>
-                    </div>
+                    <a href="#form-section" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Kirim Ide Sekarang</a>
+                    <a href="#features" class="btn btn-outline">Pelajari Lebih Lanjut <i class="fa-solid fa-arrow-down"></i></a>
                 </div>
             </div>
         </section>
 
-        <!-- Features -->
         <section class="section" id="features">
             <div class="section-inner">
                 <div class="section-header">
@@ -789,7 +579,6 @@
             </div>
         </section>
 
-        <!-- Form Section (Email removed) -->
         <section class="section" id="form-section">
             <div class="section-inner">
                 <div class="section-header">
@@ -805,7 +594,7 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="fullName">Nama <span class="required">*</span></label>
-                                    <input type="text" id="fullName" name="fullName" placeholder="Misal: Umar" required autocomplete="name">
+                                    <input type="text" id="fullName" name="fullName" placeholder="Misal: Hammam" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="appName">Nama Aplikasi Impian <span class="required">*</span></label>
@@ -833,24 +622,20 @@
                                 <label for="description">Deskripsikan Aplikasi Impianmu <span class="required">*</span></label>
                                 <textarea id="description" name="description" placeholder="Ceritakan secara detail: masalah apa yang ingin dipecahkan, fitur-fitur utama, target pengguna, dan hal lain yang menurutmu penting..." required></textarea>
                             </div>
-                            <button type="submit" class="btn-submit" id="submitBtn">
-                                <i class="fa-solid fa-paper-plane"></i> Kirim Ide Sekarang
-                            </button>
+                            <button type="submit" class="btn-submit" id="submitBtn"><i class="fa-solid fa-paper-plane"></i> Kirim Aspirasi Sekarang</button>
                         </form>
                     </div>
                 </div>
             </div>
         </section>
 
-        <footer class="footer">
-            <p>© 2026 <span class="gold">IdeaLab</span></p>
-        </footer>
+        <footer class="footer"><p>© 2026 <span class="gold">IdeaLab</span></p></footer>
     </div>
 
     <div class="success-overlay" id="successOverlay">
         <div class="success-modal">
             <div class="success-icon"><i class="fa-solid fa-check"></i></div>
-            <h2>Ide Terkirim! <i class="fa-solid fa-party-horn"></i></h2>
+            <h2>Aspirasi Terkirim! <i class="fa-solid fa-party-horn"></i></h2>
             <p id="successMessage">Terima kasih! Ide "<strong id="submittedAppName"></strong>" telah kami terima. Tim kami akan meninjau dalam 3 hari kerja.</p>
             <button class="btn-close-modal" onclick="closeModal()">Tutup</button>
         </div>
@@ -858,39 +643,20 @@
 
     <script>
         (function() {
-            document.addEventListener('contextmenu', (e) => e.preventDefault());
-
-            // Firebase init
-            const firebaseConfig = {
-                apiKey: "AIzaSyCNWjE_z2DWsUrGKpMaR_NI2T04fhk2yz8",
-                authDomain: "idealab-631ce.firebaseapp.com",
-                projectId: "idealab-631ce",
-                storageBucket: "idealab-631ce.firebasestorage.app",
-                messagingSenderId: "770922728839",
-                appId: "1:770922728839:web:2ed1250f264df417c39722"
-            };
-            firebase.initializeApp(firebaseConfig);
-            const db = firebase.firestore();
+            document.addEventListener('contextmenu', e => e.preventDefault());
 
             // Particle background
             const canvas = document.getElementById('particle-canvas');
             const ctx = canvas.getContext('2d');
             let particles = [], mouseX = 0, mouseY = 0;
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
+            function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
             resizeCanvas();
             window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
 
             class Particle {
-                constructor() {
-                    this.reset();
-                    this.y = Math.random() * canvas.height;
-                }
+                constructor() { this.reset(); this.y = Math.random() * canvas.height; }
                 reset() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = -10;
+                    this.x = Math.random() * canvas.width; this.y = -10;
                     this.size = Math.random() * 2 + 0.5;
                     this.speedY = Math.random() * 0.6 + 0.2;
                     this.speedX = (Math.random() - 0.5) * 0.4;
@@ -916,7 +682,7 @@
                 }
             }
             function initParticles() {
-                const count = Math.min(Math.floor((canvas.width * canvas.height)/12000), 150);
+                const count = Math.min(Math.floor((canvas.width*canvas.height)/12000), 150);
                 particles = [];
                 for (let i=0; i<count; i++) particles.push(new Particle());
             }
@@ -946,35 +712,12 @@
 
             // Navbar
             const navbar = document.getElementById('navbar');
-            window.addEventListener('scroll', () => {
-                navbar.classList.toggle('scrolled', window.scrollY > 50);
-            });
+            window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 50));
             const navToggle = document.getElementById('navToggle'), navLinks = document.getElementById('navLinks');
             navToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
             navLinks.querySelectorAll('a').forEach(l => l.addEventListener('click', () => navLinks.classList.remove('active')));
 
-            // Firebase counter
-            const counterEl = document.getElementById('counter-ideas');
-            const statsDocRef = db.collection('stats').doc('ideTerkumpul');
-            async function initCounter() {
-                try {
-                    const doc = await statsDocRef.get();
-                    counterEl.textContent = doc.exists ? doc.data().count.toLocaleString('en-US') : '0';
-                    if (!doc.exists) await statsDocRef.set({count:0});
-                } catch(e) {
-                    counterEl.textContent = '0';
-                }
-            }
-            initCounter();
-            async function incrementGlobalCounter() {
-                try {
-                    await statsDocRef.update({count: firebase.firestore.FieldValue.increment(1)});
-                    const updated = await statsDocRef.get();
-                    if (updated.exists) counterEl.textContent = updated.data().count.toLocaleString('en-US');
-                } catch(e) {}
-            }
-
-            // Form submission (no email)
+            // Form submission
             const ideaForm = document.getElementById('ideaForm');
             const successOverlay = document.getElementById('successOverlay');
             const submittedAppName = document.getElementById('submittedAppName');
@@ -993,7 +736,7 @@
                         if (!f.value.trim()) {
                             f.style.borderColor = '#e74c3c';
                             f.style.boxShadow = '0 0 0 4px rgba(231,76,60,0.15)';
-                            setTimeout(() => { f.style.borderColor = 'rgba(255,255,255,0.06)'; f.style.boxShadow = 'none'; }, 1500);
+                            setTimeout(() => { f.style.borderColor = ''; f.style.boxShadow = ''; }, 1500);
                         }
                     });
                     const firstEmpty = fields.find(f => !f.value.trim());
@@ -1008,26 +751,21 @@
                 try {
                     const response = await fetch('https://formspree.io/f/mwvdejag', {
                         method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({ fullName, appName, category, description, timestamp: new Date().toISOString() })
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ fullName, appName, category, description })
                     });
 
                     if (response.ok) {
-                        await db.collection('submissions').add({
-                            fullName, appName, category, description,
-                            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                        await incrementGlobalCounter();
                         submittedAppName.textContent = appName;
                         successOverlay.classList.add('active');
                         document.body.style.overflow = 'hidden';
                         ideaForm.reset();
                         document.getElementById('category').value = '';
                     } else {
-                        alert('Gagal mengirim. Coba lagi.');
+                        alert('Gagal mengirim. Silakan coba lagi.');
                     }
-                } catch (err) {
-                    alert('Kesalahan jaringan.');
+                } catch (error) {
+                    alert('Kesalahan jaringan. Silakan coba lagi.');
                 } finally {
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Aspirasi Sekarang';
@@ -1052,7 +790,7 @@
                     const target = document.querySelector(href);
                     if (target) {
                         const top = target.getBoundingClientRect().top + window.pageYOffset - 100;
-                        window.scrollTo({top, behavior:'smooth'});
+                        window.scrollTo({ top, behavior: 'smooth' });
                     }
                 });
             });
